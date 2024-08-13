@@ -1,0 +1,61 @@
+:root{
+    --porcentaje: 25;
+}
+.divContainerCirculo h2{
+    position: relative;
+    z-index: 1;
+    color: white;
+    font-size: 100%;
+}
+.divContainerCirculoExterno{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin: 0.5%;
+    /*transform: rotate(-90deg);*/
+}
+.divContainerCirculo::before{
+    content: '';
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    background-color: black;
+    border-radius: 50%;
+}
+.divContainerCirculo{
+    display: flex;
+    
+    justify-content: center;
+    align-items: center;
+    margin: 1%;
+}
+#containerSkillsCirculos{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: max-content;
+    background-color: antiquewhite;
+    flex-wrap: wrap;
+    margin-top: -1.5%;
+}
+
+
+/*@keyframes circulo {
+    0% {
+        background: conic-gradient(green 0deg, #d3d3d3 0deg);
+    }
+    25% {
+        background: conic-gradient(red 90deg, #d3d3d3 90deg);
+    }
+    50% {
+        background: conic-gradient(blue 180deg, #d3d3d3 180deg);
+    }
+    75% {
+        background: conic-gradient(pink 270deg, #d3d3d3 270deg);
+    }
+    100% {
+        background: conic-gradient(grey 360deg, #d3d3d3 0deg);
+    }
+}*/

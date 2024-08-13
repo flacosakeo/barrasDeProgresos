@@ -1,0 +1,35 @@
+#containerSkillsSemicirculos{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: antiquewhite;
+    width: 100%;
+    height: max-content;
+    margin-top: -1.5%;
+}
+
+.divContainerSemicirculo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;    
+    clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%);
+    transform: rotate(-90deg);
+    margin: 0.5%;
+    border: solid 1px grey;
+    
+}
+
+.divContainerSemicirculoyEtiqueta{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /*background-color: brown;*/
+    margin: 0.5%;
+    padding: 0.5%;
+}

@@ -1,0 +1,48 @@
+
+
+.divContainer{
+    display: flex;
+    width: 47%;
+    
+    border-radius: 50px;
+    overflow: hidden;
+    /*border: solid 1px;*/
+    background-color: rgb(197, 197, 197);
+    margin: 0.5%;
+    margin-left: 1.8%;
+}
+
+.barraProgreso{
+    display: flex;
+    /*background: var(--colorporcentaje);*/
+    /*border: solid 1px;*/
+    /*justify-content: center;*/
+    
+    
+    align-items: center;
+    /*animation: var(--animacion);*/
+    white-space: nowrap;
+    border-radius: 50px;
+}
+
+
+.barraProgresoResto{
+    display: flex;    
+    /*border: solid 1px;*/
+    justify-content: center;
+    align-items: center;
+    
+    
+    /*animation: var(--animacionresto);*/
+    
+}
+#containerSkillsBarras{
+    display: flex;
+    /*flex-direction: row;*/
+    flex-wrap: wrap;
+    width: 100%;
+    background-color: antiquewhite;
+    border-radius: 10px;
+    margin-top: -1.5%;
+    /*border: solid 1px;*/
+}
