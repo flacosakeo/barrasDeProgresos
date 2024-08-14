@@ -1,9 +1,11 @@
-
+body{
+    font-family: sans-serif;
+}
 
 .divContainer{
     display: flex;
     width: 47%;
-    
+    height: 4vh;
     border-radius: 50px;
     overflow: hidden;
     /*border: solid 1px;*/
@@ -25,7 +27,9 @@
     border-radius: 50px;
 }
 
-
+.h4{
+    font-size: 75%;
+}
 .barraProgresoResto{
     display: flex;    
     /*border: solid 1px;*/
@@ -45,4 +49,15 @@
     border-radius: 10px;
     margin-top: -1.5%;
     /*border: solid 1px;*/
+}
+
+@media (max-width: 600px) {
+    #containerSkillsBarras{
+        flex-direction: column;
+        width: 99%;
+    }
+    .divContainer{
+        width: 97%;
+    }
+
 }

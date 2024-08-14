@@ -21,6 +21,7 @@ function skillCirculo(etiquetasfiltro){
         let divContainerCirculo = document.createElement('div');
         let divContainerCirculoExterno = document.createElement('div');
         let h2Porcentaje = document.createElement('h2')
+        let h2Etiqueta = document.createElement('h2')
         let porcentaje = (Math.floor(Math.random() * 100) + 1);
         let porcentajeInicial = 0;
         let duracion = 1000;
@@ -32,15 +33,15 @@ function skillCirculo(etiquetasfiltro){
         
         h2Porcentaje.textContent = porcentaje+'%';
 
-        divContainerCirculo.style.width = '90%';
+        /*divContainerCirculo.style.width = '90%';
         divContainerCirculo.style.height = '90%';
-        divContainerCirculo.style.borderRadius = '50%';
+        divContainerCirculo.style.borderRadius = '50%';*/
         //divContainerCirculo.style.backgroundColor = 'red';
-        divContainerCirculo.style.margin = '0.5%';
+        //divContainerCirculo.style.margin = '0.5%';
         //divContainerCirculo.style.animation = `${divContainerCirculo.id} 1s linear forwards`;
 
-        divContainerCirculoExterno.style.width = '70px';
-        divContainerCirculoExterno.style.height = '70px';
+        divContainerCirculoExterno.style.width = '100px';
+        divContainerCirculoExterno.style.height = '100px';
         divContainerCirculoExterno.style.borderRadius = '50%';
         divContainerCirculoExterno.id = 'divContainerCirculoExterno'+etiqueta
         divContainerCirculoExterno.classList.add('divContainerCirculoExterno')
@@ -52,7 +53,7 @@ function skillCirculo(etiquetasfiltro){
         document.getElementById('containerSkillsCirculos').appendChild(divContainerCirculoExterno)
         document.getElementById(divContainerCirculoExterno.id).appendChild(divContainerCirculo)
         document.getElementById(divContainerCirculo.id).appendChild(h2Porcentaje)
-        
+        document.getElementById(divContainerCirculo.id).appendChild(h2Etiqueta)
         /*animacion para el porcentaje de progreso y la barra de color*/
         let animateProgress = () => {
             porcentajeInicial += paso ;
@@ -66,7 +67,7 @@ function skillCirculo(etiquetasfiltro){
             //divContainerCirculo.style.background = `conic-gradient(red ${angulo}deg, black ${angulo}deg)`;
             divContainerCirculo.style.background = `conic-gradient(red , white ${angulo}deg, black 0deg)`;
             h2Porcentaje.textContent = `${Math.round(porcentajeInicial)}%`;
-
+            h2Etiqueta.textContent = `${etiqueta}`;
             if (porcentajeInicial < porcentaje) {
                 requestAnimationFrame(animateProgress);
             }
