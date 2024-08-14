@@ -25,7 +25,7 @@ function skillCirculo(etiquetasfiltro){
         let porcentaje = (Math.floor(Math.random() * 100) + 1);
         let porcentajeInicial = 0;
         let duracion = 1000;
-        let intervalo = 10;
+        let intervalo = 20;
         let paso = (porcentaje / duracion) * intervalo;
         divContainerCirculo.classList.add('divContainerCirculo');
 
@@ -65,7 +65,7 @@ function skillCirculo(etiquetasfiltro){
             const angulo = (porcentajeInicial / 100) * 360;
 
             //divContainerCirculo.style.background = `conic-gradient(red ${angulo}deg, black ${angulo}deg)`;
-            divContainerCirculo.style.background = `conic-gradient(red , white ${angulo}deg, black 0deg)`;
+            divContainerCirculo.style.background = `conic-gradient(blue , yellow, blue ${angulo}deg, black 0deg)`;
             h2Porcentaje.textContent = `${Math.round(porcentajeInicial)}%`;
             h2Etiqueta.textContent = `${etiqueta}`;
             if (porcentajeInicial < porcentaje) {

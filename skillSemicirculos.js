@@ -26,7 +26,7 @@ function skillSemicirculo(etiquetasfiltro){
         let porcentaje = (Math.floor(Math.random() * 100) + 1);
         let porcentajeInicial = 0;
         let duracion = 1000;
-        let intervalo = 10;
+        let intervalo = 20;
         let paso = (porcentaje / duracion) * intervalo;
 
         divContainerSemicirculo.classList.add('divContainerSemicirculo')
