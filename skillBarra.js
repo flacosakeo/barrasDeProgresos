@@ -43,7 +43,8 @@ function skillBarraProgreso(etiquetasfiltro){
         
         barraProgresoResto.style.width = porcentajeresto+'%';
 
-        if (porcentaje >= 30){
+        if (porcentaje > 30){
+           
             barraProgreso.style.justifyContent = 'center';
         }
         document.getElementById('containerSkillsBarras').appendChild(divContainerBarra);
