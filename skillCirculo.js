@@ -22,7 +22,7 @@ function skillCirculo(etiquetasfiltro){
         const randomColor1 = generarColor();
         const randomColor2 = generarColor();
 
-        if(colorFondo == 'white'){
+        if(colorFondo == 'white' || colorFondo == 'antiquewhite'){
             h2Etiqueta.style.color = 'black';
             h2Porcentaje.style.color = 'black';
         }else{
