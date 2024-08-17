@@ -22,6 +22,13 @@ function skillCirculo(etiquetasfiltro){
         const randomColor1 = generarColor();
         const randomColor2 = generarColor();
 
+        if(colorFondo == 'white'){
+            h2Etiqueta.style.color = 'black';
+            h2Porcentaje.style.color = 'black';
+        }else{
+            h2Etiqueta.style.color = 'white';
+            h2Porcentaje.style.color = 'white';
+        }
         divContainerCirculo.style.setProperty('--color', colorFondo);
         divContainerCirculoExterno.style.backgroundColor = colorFondo;
         divContainerCirculoExterno.style.width = '100px';
