@@ -1,21 +1,3 @@
-function inicio(){
-
-    let etiquetas = ["css","html","js","java","sql","xampp","netbeans","vs-code","vfp",
-    "corel","office","windows","postman","photoshop"];//array con etiquetas
-    let etiquetasfiltro = [];//array vacio
-
-    let longitud = Math.floor(Math.random() * (0 - etiquetas.length)) + etiquetas.length;
-
-    for(let i = 0; i <= longitud; i++){
-        let indice = 0;
-        indice = Math.floor(Math.random() * etiquetas.length);
-        etiquetasfiltro.push(etiquetas[indice]);
-        etiquetas.splice(indice, 1);
-    } 
-    return etiquetasfiltro;
-
-}
-
 function skillCirculo(etiquetasfiltro){
     etiquetasfiltro.forEach(etiqueta => {
         let divContainerCirculo = document.createElement('div');
@@ -31,14 +13,14 @@ function skillCirculo(etiquetasfiltro){
 
         divContainerCirculo.id = 'divContainerCirculo'+etiqueta;
         
-        h2Porcentaje.textContent = porcentaje+'%';
+        h2Porcentaje.id = 'porcentaje'+etiqueta;
 
-        /*divContainerCirculo.style.width = '90%';
-        divContainerCirculo.style.height = '90%';
-        divContainerCirculo.style.borderRadius = '50%';*/
-        //divContainerCirculo.style.backgroundColor = 'red';
-        //divContainerCirculo.style.margin = '0.5%';
-        //divContainerCirculo.style.animation = `${divContainerCirculo.id} 1s linear forwards`;
+        const color1 = document.getElementById('selectCirculo1').value;
+        const color2 = document.getElementById('selectCirculo2').value;
+  
+        const randomColor1 = generarColor();
+        const randomColor2 = generarColor();
+
 
         divContainerCirculoExterno.style.width = '100px';
         divContainerCirculoExterno.style.height = '100px';
@@ -46,15 +28,13 @@ function skillCirculo(etiquetasfiltro){
         divContainerCirculoExterno.id = 'divContainerCirculoExterno'+etiqueta
         divContainerCirculoExterno.classList.add('divContainerCirculoExterno')
         divContainerCirculoExterno.style.backgroundColor = 'black';
-        //divContainerCirculo.style.background = `conic-gradient(red 0deg, green 90deg, blue 180deg, yellow 270deg, cyan 360deg)`;
-        //divContainerCirculo.style.background= `conic-gradient(from 180deg at center, red, yellow, green, blue)`;
-        //divContainerCirculo.style.background = `conic-gradient(red, yellow, green, blue)`;
         
         document.getElementById('containerSkillsCirculos').appendChild(divContainerCirculoExterno)
         document.getElementById(divContainerCirculoExterno.id).appendChild(divContainerCirculo)
         document.getElementById(divContainerCirculo.id).appendChild(h2Porcentaje)
         document.getElementById(divContainerCirculo.id).appendChild(h2Etiqueta)
         /*animacion para el porcentaje de progreso y la barra de color*/
+        
         let animateProgress = () => {
             porcentajeInicial += paso ;
 
@@ -65,7 +45,19 @@ function skillCirculo(etiquetasfiltro){
             const angulo = (porcentajeInicial / 100) * 360;
 
             //divContainerCirculo.style.background = `conic-gradient(red ${angulo}deg, black ${angulo}deg)`;
-            divContainerCirculo.style.background = `conic-gradient(blue , yellow, blue ${angulo}deg, black 0deg)`;
+            if (color1 == "random" && color2 == "random"){
+                divContainerCirculo.style.background = `conic-gradient(${randomColor1}, ${randomColor2} ${angulo}deg, black ${angulo}deg)`;
+            }
+            if (color1 != "random" && color2 == "random"){
+                divContainerCirculo.style.background = `conic-gradient(${color1}, ${randomColor2} ${angulo}deg, black ${angulo}deg)`;
+            }
+            if (color1 == "random" && color2 != "random"){
+                divContainerCirculo.style.background = `conic-gradient(${randomColor1}, ${color2} ${angulo}deg, black ${angulo}deg)`;
+            }
+            if (color1 != "random" && color2 != "random"){
+                divContainerCirculo.style.background = `conic-gradient(${color1}, ${color2} ${angulo}deg, black ${angulo}deg)`;
+            }
+            
             h2Porcentaje.textContent = `${Math.round(porcentajeInicial)}%`;
             h2Etiqueta.textContent = `${etiqueta}`;
             if (porcentajeInicial < porcentaje) {
@@ -74,13 +66,25 @@ function skillCirculo(etiquetasfiltro){
         };
         /*hasta aqui es la animacion*/
 
+        document.getElementById(divContainerCirculo.id).addEventListener('click', () =>{
+            porcentajeInicial = 0;
+            requestAnimationFrame(animateProgress);
+        });
+
         requestAnimationFrame(animateProgress);
     });
 }
+
 document.getElementById('cambiarCirculo').addEventListener('click', () => {
     document.getElementById('containerSkillsCirculos').innerHTML = '';
     skillCirculo(inicio());
 })
 
+function generarColor(){    
+    rojo = Math.floor(Math.random() * 256);//generacion de un numero aleatorio para la formacion de un color
+    verde = Math.floor(Math.random() * 256);
+    azul = Math.floor(Math.random() * 256);
+    return color = `rgb(${rojo},${verde},${azul})`;
+}
 
 skillCirculo(inicio());

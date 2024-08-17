@@ -1,21 +1,3 @@
-function inicio(){
-
-    let etiquetas = ["css","html","js","java","sql","xampp","netbeans","vs-code","vfp",
-    "corel","office","windows","postman","photoshop"];//array con etiquetas
-    let etiquetasfiltro = [];//array vacio
-
-    let longitud = Math.floor(Math.random() * (0 - etiquetas.length)) + etiquetas.length;
-
-    for(let i = 0; i <= longitud; i++){
-        let indice = 0;
-        indice = Math.floor(Math.random() * etiquetas.length);
-        etiquetasfiltro.push(etiquetas[indice]);
-        etiquetas.splice(indice, 1);
-    } 
-    return etiquetasfiltro;
-
-}
-
 function skillBarraProgreso(etiquetasfiltro){
     etiquetasfiltro.forEach(etiqueta => {
         let divContainerBarra = document.createElement('div');
@@ -36,40 +18,68 @@ function skillBarraProgreso(etiquetasfiltro){
         barraProgresoResto.id = "barraProgresoResto"+etiqueta;
         barraProgreso.style.animation = `${barraProgreso.id} 2s forwards`;
         etiquetaprogreso.id = "etiquetaprogreso"+etiqueta;
-        porcentaje = (Math.floor(Math.random() * 100) + 1);
-        porcentajeresto = (100 - porcentaje);
+        const porcentaje = (Math.floor(Math.random() * 100) + 1);
+        //etiquetaprogreso.value = porcentaje;
+        const porcentajeresto = (100 - porcentaje);
         
         barraProgreso.style.background = `linear-gradient(to right, ${generarColor()}, ${generarColor()})`;         
         
         barraProgresoResto.style.width = porcentajeresto+'%';
 
-        if (porcentaje > 30){
-           
+        
+        /*if (porcentaje > 30){    
+               
             barraProgreso.style.justifyContent = 'center';
-        }
+        } */
+
         document.getElementById('containerSkillsBarras').appendChild(divContainerBarra);
         document.getElementById(divContainerBarra.id).appendChild(barraProgreso);
         document.getElementById(barraProgreso.id).appendChild(etiquetaprogreso);
         document.getElementById(divContainerBarra.id).appendChild(barraProgresoResto);
         document.getElementById(barraProgresoResto.id).appendChild(etiquetaprogresoresto);
 
+
         intervalo(ancho, anchoresto, porcentaje, porcentajeresto, etiquetaprogreso, etiquetaprogresoresto, etiqueta, barraProgreso.id, barraProgresoResto.id);
 
-    });
-}
+        setTimeout(() => {
+            const etiquetaprogresoLongitud = etiquetaprogreso.offsetWidth;
+            const barraProgresoLongitud = barraProgreso.offsetWidth;
+    
+            // Si el ancho de la barra de progreso es mayor que la longitud de la etiqueta
+            if (barraProgresoLongitud > etiquetaprogresoLongitud) {
+                barraProgreso.style.justifyContent = 'center';
+            }
+        }, 1500);
+        
+        divContainerBarra.addEventListener('click', () => {
+            barraProgreso.style.width = '0%';
+            barraProgresoResto.style.width = porcentajeresto;
+            barraProgreso.style.animation = 'none'; // Quita la animación
+            barraProgreso.offsetHeight; // Fuerza el reflow
+            barraProgreso.style.animation = `${barraProgreso.id} 2s forwards`; // Vuelve a añadir la animación
+            //etiquetaprogreso.textContent = `${etiqueta}`.toUpperCase() + ` 0%`;
+            //etiquetaprogresoresto.textContent = `0%`;
+            intervalo(0, 0, porcentaje, porcentajeresto, etiquetaprogreso, etiquetaprogresoresto, etiqueta, barraProgreso.id, barraProgresoResto.id);
+            
+        });
+     });
+};
+
+
 function intervalo(ancho, anchoresto, porcentaje, porcentajeresto, 
                    etiquetaprogreso, etiquetaprogresoresto, etiqueta,
                    barraProgreso, barraProgresoResto){
+   
     animacion(barraProgreso, porcentaje);
     let intervalo = setInterval(function(){
         if (ancho >= porcentaje){
             clearInterval(intervalo);
         }else{
             ancho ++;
-            etiquetaprogreso.textContent = `${etiqueta}`.toUpperCase() + ` ${ancho}%`;            
+            etiquetaprogreso.textContent = `${etiqueta}`.toUpperCase() + ` ${ancho}%`;
         }
-    },20);
-
+    },20);    
+            
     
     animacion(barraProgresoResto, porcentajeresto);
     let intervaloresto = setInterval(function(){
@@ -78,10 +88,11 @@ function intervalo(ancho, anchoresto, porcentaje, porcentajeresto,
         }else{
             anchoresto ++;            
             if(porcentaje < 100){
-                etiquetaprogresoresto.textContent = `${anchoresto}%`;  
+                etiquetaprogresoresto.textContent = `${anchoresto}%`;
             }          
         }
     },20);
+
 };
 
 function animacion(barraProgreso, porcentaje){
