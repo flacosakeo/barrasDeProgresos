@@ -17,17 +17,19 @@ function skillCirculo(etiquetasfiltro){
 
         const color1 = document.getElementById('selectCirculo1').value;
         const color2 = document.getElementById('selectCirculo2').value;
-  
+        const colorFondo = document.getElementById('selectFondo').value;
+
         const randomColor1 = generarColor();
         const randomColor2 = generarColor();
 
-
+        divContainerCirculo.style.setProperty('--color', colorFondo);
+        divContainerCirculoExterno.style.backgroundColor = colorFondo;
         divContainerCirculoExterno.style.width = '100px';
         divContainerCirculoExterno.style.height = '100px';
         divContainerCirculoExterno.style.borderRadius = '50%';
         divContainerCirculoExterno.id = 'divContainerCirculoExterno'+etiqueta
         divContainerCirculoExterno.classList.add('divContainerCirculoExterno')
-        divContainerCirculoExterno.style.backgroundColor = 'black';
+        
         
         document.getElementById('containerSkillsCirculos').appendChild(divContainerCirculoExterno)
         document.getElementById(divContainerCirculoExterno.id).appendChild(divContainerCirculo)
@@ -46,16 +48,16 @@ function skillCirculo(etiquetasfiltro){
 
             //divContainerCirculo.style.background = `conic-gradient(red ${angulo}deg, black ${angulo}deg)`;
             if (color1 == "random" && color2 == "random"){
-                divContainerCirculo.style.background = `conic-gradient(${randomColor1}, ${randomColor2} ${angulo}deg, black ${angulo}deg)`;
+                divContainerCirculo.style.background = `conic-gradient(${randomColor1}, ${randomColor2} ${angulo}deg, ${colorFondo} ${angulo}deg)`;
             }
             if (color1 != "random" && color2 == "random"){
-                divContainerCirculo.style.background = `conic-gradient(${color1}, ${randomColor2} ${angulo}deg, black ${angulo}deg)`;
+                divContainerCirculo.style.background = `conic-gradient(${color1}, ${randomColor2} ${angulo}deg, ${colorFondo} ${angulo}deg)`;
             }
             if (color1 == "random" && color2 != "random"){
-                divContainerCirculo.style.background = `conic-gradient(${randomColor1}, ${color2} ${angulo}deg, black ${angulo}deg)`;
+                divContainerCirculo.style.background = `conic-gradient(${randomColor1}, ${color2} ${angulo}deg, ${colorFondo} ${angulo}deg)`;
             }
             if (color1 != "random" && color2 != "random"){
-                divContainerCirculo.style.background = `conic-gradient(${color1}, ${color2} ${angulo}deg, black ${angulo}deg)`;
+                divContainerCirculo.style.background = `conic-gradient(${color1}, ${color2} ${angulo}deg, ${colorFondo} ${angulo}deg)`;
             }
             
             h2Porcentaje.textContent = `${Math.round(porcentajeInicial)}%`;
