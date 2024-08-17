@@ -4,7 +4,7 @@
 .divContainerCirculo h2{
     position: relative;
     z-index: 1;
-    color: white;
+    /*color: white;*/
     font-size: 80%;
     margin-top: 1%;
     margin-bottom: 1%;
