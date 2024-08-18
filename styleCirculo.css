@@ -2,14 +2,6 @@
     --color: '';
     --forma: '';
 }
-option{
-    display: flex;
-    
-    align-items: center;
-
-    -webkit-appearance: none; /* Quitar el estilo nativo en WebKit */
-    appearance: none;
-}
 .divContainerCirculo h2{
     position: relative;
     z-index: 1;
