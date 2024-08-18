@@ -7,9 +7,6 @@ option{
     
     align-items: center;
 
-    
-}
-select{
     -webkit-appearance: none; /* Quitar el estilo nativo en WebKit */
     appearance: none;
 }
