@@ -22,6 +22,15 @@ function skillCirculo(etiquetasfiltro){
         const randomColor1 = generarColor();
         const randomColor2 = generarColor();
 
+        const forma = document.getElementById('selectForma').value;
+
+        if (forma == "1"){
+            divContainerCirculoExterno.style.borderRadius = '50%';
+            divContainerCirculo.style.borderRadius = '50%';
+            divContainerCirculo.style.setProperty('--forma', '50%');
+        }
+        
+
         if(colorFondo == 'white' || colorFondo == 'antiquewhite'){
             h2Etiqueta.style.color = 'black';
             h2Porcentaje.style.color = 'black';
@@ -33,10 +42,9 @@ function skillCirculo(etiquetasfiltro){
         divContainerCirculoExterno.style.backgroundColor = colorFondo;
         divContainerCirculoExterno.style.width = '100px';
         divContainerCirculoExterno.style.height = '100px';
-        divContainerCirculoExterno.style.borderRadius = '50%';
+        //divContainerCirculoExterno.style.borderRadius = '50%';
         divContainerCirculoExterno.id = 'divContainerCirculoExterno'+etiqueta
         divContainerCirculoExterno.classList.add('divContainerCirculoExterno')
-        
         
         document.getElementById('containerSkillsCirculos').appendChild(divContainerCirculoExterno)
         document.getElementById(divContainerCirculoExterno.id).appendChild(divContainerCirculo)
@@ -95,5 +103,6 @@ function generarColor(){
     azul = Math.floor(Math.random() * 256);
     return color = `rgb(${rojo},${verde},${azul})`;
 }
+
 
 skillCirculo(inicio());

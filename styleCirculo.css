@@ -1,5 +1,13 @@
 :root{
     --color: '';
+    --forma: '';
+}
+option{
+    display: flex;
+    
+    align-items: center;
+
+    
 }
 .divContainerCirculo h2{
     position: relative;
@@ -26,7 +34,7 @@
     width: 75%;
     height: 75%;
     background-color: var(--color);
-    border-radius: 50%;
+    border-radius: var(--forma);
     display: flex;
 
     
@@ -35,7 +43,7 @@
     display: flex;
     width: 90%;
     height: 90%;
-    border-radius: 50%;
+    /*border-radius: 50%;*/
     flex-direction: column;
     justify-content: center;
     align-items: center;
