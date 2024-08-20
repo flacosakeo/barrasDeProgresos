@@ -25,21 +25,37 @@ function skillCirculo(etiquetasfiltro){
         const forma = document.getElementById('selectForma').value;
 
         if (forma == "1"){
+            //divContainerCirculoExterno.style.background = 'local';
             divContainerCirculoExterno.style.borderRadius = '50%';
             divContainerCirculo.style.borderRadius = '50%';
             divContainerCirculo.style.setProperty('--forma', '50%');
+            divContainerCirculoExterno.style.backgroundColor = colorFondo;
+        }
+        if (forma == "2"){
+            divContainerCirculoExterno.style.borderRadius = '';
+            //divContainerCirculoExterno.style.background = 'transparent';
+            divContainerCirculo.style.borderRadius = '';
+            divContainerCirculo.style.setProperty('--forma', '');
+            //divContainerCirculoExterno.style.backgroundColor = colorFondo;
+        }
+        if (forma == "3"){
+            divContainerCirculoExterno.style.borderRadius = '';
+            //divContainerCirculoExterno.style.background = 'transparent';
+            divContainerCirculo.style.borderRadius = '';
+            divContainerCirculo.style.setProperty('--forma', '50%');
+            //divContainerCirculoExterno.style.backgroundColor = colorFondo;
         }
         
 
-        if(colorFondo == 'white' || colorFondo == 'antiquewhite'){
+        if(colorFondo == 'white' || colorFondo == 'antiquewhite' || colorFondo == 'darksalmon'){
             h2Etiqueta.style.color = 'black';
             h2Porcentaje.style.color = 'black';
-        }else{
+        }else{           
             h2Etiqueta.style.color = 'white';
-            h2Porcentaje.style.color = 'white';
+            h2Porcentaje.style.color = 'white';            
         }
         divContainerCirculo.style.setProperty('--color', colorFondo);
-        divContainerCirculoExterno.style.backgroundColor = colorFondo;
+        //divContainerCirculoExterno.style.backgroundColor = colorFondo;
         divContainerCirculoExterno.style.width = '100px';
         divContainerCirculoExterno.style.height = '100px';
         //divContainerCirculoExterno.style.borderRadius = '50%';

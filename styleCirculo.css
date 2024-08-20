@@ -2,6 +2,13 @@
     --color: '';
     --forma: '';
 }
+option{
+    display: flex;
+    
+    align-items: center;
+
+    
+}
 .divContainerCirculo h2{
     position: relative;
     z-index: 1;
@@ -19,6 +26,7 @@
     align-items: center;
     position: relative;
     margin: 0.5%;
+    color: ;
     /*transform: rotate(-90deg);*/
 }
 .divContainerCirculo::before{
