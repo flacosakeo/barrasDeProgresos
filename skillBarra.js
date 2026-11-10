@@ -1,124 +1,138 @@
-function skillBarraProgreso(etiquetasfiltro){
+function skillBarraProgreso(etiquetasfiltro) {
+    const container = document.getElementById('containerSkillsBarras');
+
     etiquetasfiltro.forEach(etiqueta => {
-        let divContainerBarra = document.createElement('div');
-        let barraProgreso = document.createElement('div');
-        let barraProgresoResto = document.createElement('div');
-        let etiquetaprogreso = document.createElement('h4');
-        let etiquetaprogresoresto = document.createElement('h4');
-        let ancho = 0;
-        let anchoresto = 0;
+        // Tarjeta envolvente
+        const card = document.createElement('div');
+        card.classList.add('skill-barra-card');
+        card.id = `cardBarra${etiqueta}`;
+
+        // Cabecera superior con información siempre legible
+        const header = document.createElement('div');
+        header.classList.add('skill-barra-header');
+
+        const nombre = document.createElement('span');
+        nombre.classList.add('skill-barra-nombre');
+        nombre.textContent = etiqueta.toUpperCase();
+
+        const badgesContainer = document.createElement('div');
+        badgesContainer.classList.add('skill-barra-badges');
+
+        const badgeProgreso = document.createElement('span');
+        badgeProgreso.classList.add('badge-progreso');
+
+        const badgeResto = document.createElement('span');
+        badgeResto.classList.add('badge-resto');
+
+        badgesContainer.appendChild(badgeProgreso);
+        badgesContainer.appendChild(badgeResto);
+        header.appendChild(nombre);
+        header.appendChild(badgesContainer);
+
+        // Pista de la barra de progreso
+        const divContainerBarra = document.createElement('div');
         divContainerBarra.classList.add('divContainer');
+        divContainerBarra.id = `divContainer${etiqueta}`;
+
+        const barraProgreso = document.createElement('div');
         barraProgreso.classList.add('barraProgreso');
+        barraProgreso.id = `barraProgreso${etiqueta}`;
+
+        const barraProgresoResto = document.createElement('div');
         barraProgresoResto.classList.add('barraProgresoResto');
-        etiquetaprogreso.classList.add('h4');
-        etiquetaprogresoresto.classList.add('h4');
+        barraProgresoResto.id = `barraProgresoResto${etiqueta}`;
 
-        divContainerBarra.id = "divContainer"+etiqueta;
-        barraProgreso.id = "barraProgreso"+etiqueta;
-        barraProgresoResto.id = "barraProgresoResto"+etiqueta;
-        barraProgreso.style.animation = `${barraProgreso.id} 2s forwards`;
-        etiquetaprogreso.id = "etiquetaprogreso"+etiqueta;
-        const porcentaje = (Math.floor(Math.random() * 100) + 1);
-        //etiquetaprogreso.value = porcentaje;
-        const porcentajeresto = (100 - porcentaje);
-        
-        barraProgreso.style.background = `linear-gradient(to right, ${generarColor()}, ${generarColor()})`;         
-        
-        barraProgresoResto.style.width = porcentajeresto+'%';
+        // Textos internos sutiles (se muestran únicamente cuando hay espacio suficiente)
+        const etiquetaInterna = document.createElement('span');
+        etiquetaInterna.classList.add('etiqueta-interna');
 
-        
-        /*if (porcentaje > 30){    
-               
-            barraProgreso.style.justifyContent = 'center';
-        } */
+        const etiquetaRestoInterna = document.createElement('span');
+        etiquetaRestoInterna.classList.add('etiqueta-resto-interna');
 
-        document.getElementById('containerSkillsBarras').appendChild(divContainerBarra);
-        document.getElementById(divContainerBarra.id).appendChild(barraProgreso);
-        document.getElementById(barraProgreso.id).appendChild(etiquetaprogreso);
-        document.getElementById(divContainerBarra.id).appendChild(barraProgresoResto);
-        document.getElementById(barraProgresoResto.id).appendChild(etiquetaprogresoresto);
+        barraProgreso.appendChild(etiquetaInterna);
+        barraProgresoResto.appendChild(etiquetaRestoInterna);
+        divContainerBarra.appendChild(barraProgreso);
+        divContainerBarra.appendChild(barraProgresoResto);
 
+        // Ensamblado final de la tarjeta
+        card.appendChild(header);
+        card.appendChild(divContainerBarra);
+        container.appendChild(card);
 
-        intervalo(ancho, anchoresto, porcentaje, porcentajeresto, etiquetaprogreso, etiquetaprogresoresto, etiqueta, barraProgreso.id, barraProgresoResto.id);
+        // Color del gradiente
+        const porcentaje = Math.floor(Math.random() * 90) + 10;
+        const color1 = generarColor();
+        const color2 = generarColor();
+        barraProgreso.style.background = `linear-gradient(135deg, ${color1}, ${color2})`;
 
-        setTimeout(() => {
-            const etiquetaprogresoLongitud = etiquetaprogreso.offsetWidth;
-            const barraProgresoLongitud = barraProgreso.offsetWidth;
-    
-            // Si el ancho de la barra de progreso es mayor que la longitud de la etiqueta
-            if (barraProgresoLongitud > etiquetaprogresoLongitud) {
-                barraProgreso.style.justifyContent = 'center';
+        let animFrameId = null;
+
+        function animarBarra() {
+            if (animFrameId) {
+                cancelAnimationFrame(animFrameId);
             }
-        }, 1500);
-        
-        divContainerBarra.addEventListener('click', () => {
-            barraProgreso.style.width = '0%';
-            barraProgresoResto.style.width = porcentajeresto;
-            barraProgreso.style.animation = 'none'; // Quita la animación
-            barraProgreso.offsetHeight; // Fuerza el reflow
-            barraProgreso.style.animation = `${barraProgreso.id} 2s forwards`; // Vuelve a añadir la animación
-            //etiquetaprogreso.textContent = `${etiqueta}`.toUpperCase() + ` 0%`;
-            //etiquetaprogresoresto.textContent = `0%`;
-            intervalo(0, 0, porcentaje, porcentajeresto, etiquetaprogreso, etiquetaprogresoresto, etiqueta, barraProgreso.id, barraProgresoResto.id);
-            
+
+            const duracion = 1200; // ms
+            const inicioTiempo = performance.now();
+
+            function paso(ahora) {
+                const transcurrido = ahora - inicioTiempo;
+                const progresoFraccion = Math.min(transcurrido / duracion, 1);
+                
+                // Función de suavizado cúbico
+                const easeOut = 1 - Math.pow(1 - progresoFraccion, 3);
+                const actual = easeOut * porcentaje;
+                const actualRedondeado = Math.round(actual);
+                const restoRedondeado = Math.round(100 - actual);
+
+                // Anchos físicos
+                barraProgreso.style.width = `${actual}%`;
+                barraProgresoResto.style.width = `${100 - actual}%`;
+
+                // Badges en la cabecera (100% legibles sin importar el porcentaje)
+                badgeProgreso.textContent = `${actualRedondeado}%`;
+                badgeResto.textContent = `${restoRedondeado}% restante`;
+
+                // Texto interno: solo visible si el ancho es suficiente para no recortarse
+                if (actual >= 30) {
+                    etiquetaInterna.textContent = `${actualRedondeado}%`;
+                    etiquetaInterna.style.opacity = '1';
+                } else {
+                    etiquetaInterna.style.opacity = '0';
+                }
+
+                if ((100 - actual) >= 30) {
+                    etiquetaRestoInterna.textContent = `${restoRedondeado}%`;
+                    etiquetaRestoInterna.style.opacity = '1';
+                } else {
+                    etiquetaRestoInterna.style.opacity = '0';
+                }
+
+                if (progresoFraccion < 1) {
+                    animFrameId = requestAnimationFrame(paso);
+                } else {
+                    animFrameId = null;
+                }
+            }
+
+            animFrameId = requestAnimationFrame(paso);
+        }
+
+        // Iniciar animación
+        animarBarra();
+
+        // Reinicio limpio con clic en cualquier parte de la tarjeta
+        card.addEventListener('click', () => {
+            animarBarra();
         });
-     });
-};
-
-
-function intervalo(ancho, anchoresto, porcentaje, porcentajeresto, 
-                   etiquetaprogreso, etiquetaprogresoresto, etiqueta,
-                   barraProgreso, barraProgresoResto){
-   
-    animacion(barraProgreso, porcentaje);
-    let intervalo = setInterval(function(){
-        if (ancho >= porcentaje){
-            clearInterval(intervalo);
-        }else{
-            ancho ++;
-            etiquetaprogreso.textContent = `${etiqueta}`.toUpperCase() + ` ${ancho}%`;
-        }
-    },20);    
-            
-    
-    animacion(barraProgresoResto, porcentajeresto);
-    let intervaloresto = setInterval(function(){
-        if (anchoresto >= porcentajeresto){
-            clearInterval(intervaloresto);
-        }else{
-            anchoresto ++;            
-            if(porcentaje < 100){
-                etiquetaprogresoresto.textContent = `${anchoresto}%`;
-            }          
-        }
-    },20);
-
-};
-
-function animacion(barraProgreso, porcentaje){
-        let styleSheet = document.styleSheets[0];
-        let keyframes = `
-            @keyframes ${barraProgreso} {   
-                from { width: 0 }             
-                to { width: ${porcentaje}%; }
-            }
-        `;
-        styleSheet.insertRule(keyframes, styleSheet.cssRules.length);//inserta una nueva regla en css     
-}
-
-function generarColor(){    
-    rojo = Math.floor(Math.random() * 256);//generacion de un numero aleatorio para la formacion de un color
-    verde = Math.floor(Math.random() * 256);
-    azul = Math.floor(Math.random() * 256);
-    return color = `rgb(${rojo},${verde},${azul})`;
+    });
 }
 
 document.getElementById('cambiarBarra').addEventListener('click', () => {
-    document.getElementById('containerSkillsBarras').innerHTML = '';
+    const container = document.getElementById('containerSkillsBarras');
+    container.innerHTML = '';
     skillBarraProgreso(inicio());
-})
+});
 
+// Inicialización
 skillBarraProgreso(inicio());
-
-
-

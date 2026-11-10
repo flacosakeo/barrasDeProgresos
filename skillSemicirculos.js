@@ -1,92 +1,87 @@
-function skillSemicirculo(etiquetasfiltro){
+function skillSemicirculo(etiquetasfiltro) {
+    const container = document.getElementById('containerSkillsSemicirculos');
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    const trackColor = isLight ? 'rgba(0, 0, 0, 0.08)' : 'rgba(255, 255, 255, 0.1)';
+
     etiquetasfiltro.forEach(etiqueta => {
-        let divContainerSemicirculoyEtiqueta = document.createElement('div');
-        let divContainerSemicirculo = document.createElement('div');
-        let divContainerSemicirculoInterno = document.createElement('div');
-        let h2Porcentaje = document.createElement('h2');
-        let h6Etiqueta = document.createElement('h6');
-        let porcentaje = (Math.floor(Math.random() * 100) + 1);
-        let porcentajeInicial = 0;
-        let duracion = 1000;
-        let intervalo = 20;
-        let paso = (porcentaje / duracion) * intervalo;
+        const divContainerSemicirculoyEtiqueta = document.createElement('div');
+        const divContainerSemicirculo = document.createElement('div');
+        const divContainerSemicirculoInterno = document.createElement('div');
+        const h2Porcentaje = document.createElement('h2');
+        const h6Etiqueta = document.createElement('h6');
 
-        divContainerSemicirculo.classList.add('divContainerSemicirculo')
-        divContainerSemicirculoyEtiqueta.classList.add('divContainerSemicirculoyEtiqueta')
+        divContainerSemicirculoyEtiqueta.classList.add('divContainerSemicirculoyEtiqueta');
+        divContainerSemicirculo.classList.add('divContainerSemicirculo');
+        divContainerSemicirculoInterno.classList.add('divContainerSemicirculoInterno');
 
-        divContainerSemicirculoyEtiqueta.id = 'divContainerSemicirculoyEtiqueta'+etiqueta;
-        divContainerSemicirculo.id = 'divContainerSemicirculo'+etiqueta;
-        divContainerSemicirculoInterno.id = 'divContainerSemicirculoInterno'+etiqueta;
+        divContainerSemicirculoyEtiqueta.id = `divContainerSemicirculoyEtiqueta${etiqueta}`;
+        divContainerSemicirculo.id = `divContainerSemicirculo${etiqueta}`;
+        divContainerSemicirculoInterno.id = `divContainerSemicirculoInterno${etiqueta}`;
 
-        divContainerSemicirculoInterno.style.width = '70%';
-        divContainerSemicirculoInterno.style.height = '70%';
-        divContainerSemicirculoInterno.style.borderRadius = '50%';
-        divContainerSemicirculoInterno.style.clipPath = 'polygon(0% 0%, 100% 0%, 100% 50%, 0% 50%);'
-        divContainerSemicirculoInterno.style.backgroundColor = 'antiquewhite';
-        divContainerSemicirculoInterno.style.display = 'flex';
-        divContainerSemicirculoInterno.style.justifyContent = 'center';
-        divContainerSemicirculoInterno.style.transform = 'rotate(90deg)';
-        divContainerSemicirculoInterno.style.border = 'solid 1px grey';
-        divContainerSemicirculoInterno.style.boxShadow = '0px 0px 10px 0px';
-        //divContainerSemicirculoInterno.style.alignItems = 'center';
-        
-        h2Porcentaje.textContent = porcentaje+'%';
-        h2Porcentaje.style.marginTop = '20%';
-        h2Porcentaje.style.fontSize = '100%';
-        
-        h6Etiqueta.textContent = `${etiqueta}`.toUpperCase();
-        h6Etiqueta.style.color = 'black';
-        h6Etiqueta.style.marginTop = '-45%'
+        h6Etiqueta.textContent = etiqueta.toUpperCase();
 
-        let color = generarColor();
-        
+        // Ensamblado en el DOM
+        divContainerSemicirculoInterno.appendChild(h2Porcentaje);
+        divContainerSemicirculo.appendChild(divContainerSemicirculoInterno);
+        divContainerSemicirculoyEtiqueta.appendChild(divContainerSemicirculo);
+        divContainerSemicirculoyEtiqueta.appendChild(h6Etiqueta);
+        container.appendChild(divContainerSemicirculoyEtiqueta);
 
+        const color = generarColor();
+        const porcentaje = Math.floor(Math.random() * 90) + 10;
 
-        document.getElementById('containerSkillsSemicirculos').appendChild(divContainerSemicirculoyEtiqueta);
-        document.getElementById(divContainerSemicirculoyEtiqueta.id).appendChild(divContainerSemicirculo);
-        document.getElementById(divContainerSemicirculo.id).appendChild(divContainerSemicirculoInterno);
-        document.getElementById(divContainerSemicirculoyEtiqueta.id).appendChild(h6Etiqueta);
-        document.getElementById(divContainerSemicirculoInterno.id).appendChild(h2Porcentaje);
+        let animFrameId = null;
 
-        /*animacion para el porcentaje de progreso y la barra de color*/
-        let animateProgress = () => {
-            porcentajeInicial += paso ;
-
-            if (porcentajeInicial >= porcentaje) {
-                porcentajeInicial = porcentaje;
+        function animarSemicirculo() {
+            if (animFrameId) {
+                cancelAnimationFrame(animFrameId);
             }
 
-            const angulo = (porcentajeInicial / 100) * 180;
-            
-            //divContainerCirculo.style.background = `conic-gradient(red ${angulo}deg, black ${angulo}deg)`;
-            //divContainerSemicirculo.style.background = `conic-gradient( red, green, blue ${angulo}deg, transparent 0deg )`;
-            divContainerSemicirculo.style.background = `conic-gradient( ${color} ${angulo}deg, transparent 0deg )`;
-            h2Porcentaje.textContent = `${Math.round(porcentajeInicial)}%`;
+            const duracion = 1200; // ms
+            const inicioTiempo = performance.now();
 
-            if (porcentajeInicial < porcentaje) {
-                requestAnimationFrame(animateProgress);
+            function paso(ahora) {
+                const transcurrido = ahora - inicioTiempo;
+                const progresoFraccion = Math.min(transcurrido / duracion, 1);
+                
+                // Curva de aceleración/desaceleración suave
+                const easeOut = 1 - Math.pow(1 - progresoFraccion, 3);
+                const actual = easeOut * porcentaje;
+                
+                // Arco de 180 grados (de izquierda a derecha en semicírculo superior)
+                const angulo = (actual / 100) * 180;
+
+                divContainerSemicirculo.style.background = `conic-gradient(from 270deg, ${color} 0deg ${angulo}deg, ${trackColor} ${angulo}deg 180deg, transparent 180deg)`;
+                h2Porcentaje.textContent = `${Math.round(actual)}%`;
+
+                if (progresoFraccion < 1) {
+                    animFrameId = requestAnimationFrame(paso);
+                } else {
+                    animFrameId = null;
+                }
             }
-        };
-        /*hasta aqui es la animacion*/
 
-        document.getElementById(divContainerSemicirculo.id).addEventListener('click', () =>{
-            porcentajeInicial = 0;
-            requestAnimationFrame(animateProgress);
+            animFrameId = requestAnimationFrame(paso);
+        }
+
+        // Iniciar animación
+        animarSemicirculo();
+
+        // Reinicio limpio con clic
+        divContainerSemicirculoyEtiqueta.addEventListener('click', () => {
+            animarSemicirculo();
         });
-
-        requestAnimationFrame(animateProgress);
     });
+}
 
-}
-function generarColor(){
-    rojo = Math.floor(Math.random() * 255);//generacion de un numero aleatorio para la formacion de un color
-    verde = Math.floor(Math.random() * 255);
-    azul = Math.floor(Math.random() * 255);
-    return color = `rgb(${rojo},${verde},${azul})`;
-}
-skillSemicirculo(inicio());
+// Exponer globalmente
+window.skillSemicirculo = skillSemicirculo;
 
 document.getElementById('cambiarSemicirculo').addEventListener('click', () => {
-    document.getElementById('containerSkillsSemicirculos').innerHTML = '';
+    const container = document.getElementById('containerSkillsSemicirculos');
+    container.innerHTML = '';
     skillSemicirculo(inicio());
-})
+});
+
+// Inicialización
+skillSemicirculo(inicio());

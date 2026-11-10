@@ -1,124 +1,123 @@
-function skillCirculo(etiquetasfiltro){
+function skillCirculo(etiquetasfiltro) {
+    const container = document.getElementById('containerSkillsCirculos');
+
+    // Opciones seleccionadas por el usuario
+    const forma = document.getElementById('selectForma').value;
+    let colorFondo = document.getElementById('selectFondo').value;
+    const selectColor1 = document.getElementById('selectCirculo1').value;
+    const selectColor2 = document.getElementById('selectCirculo2').value;
+
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    if (colorFondo === 'auto') {
+        colorFondo = isLight ? '#ffffff' : '#1e293b';
+    }
+
     etiquetasfiltro.forEach(etiqueta => {
-        let divContainerCirculo = document.createElement('div');
-        let divContainerCirculoExterno = document.createElement('div');
-        let h2Porcentaje = document.createElement('h2')
-        let h2Etiqueta = document.createElement('h2')
-        let porcentaje = (Math.floor(Math.random() * 100) + 1);
-        let porcentajeInicial = 0;
-        let duracion = 1000;
-        let intervalo = 20;
-        let paso = (porcentaje / duracion) * intervalo;
+        const divContainerCirculoExterno = document.createElement('div');
+        const divContainerCirculo = document.createElement('div');
+        const h2Porcentaje = document.createElement('h2');
+        const h2Etiqueta = document.createElement('h2');
+
+        divContainerCirculoExterno.classList.add('divContainerCirculoExterno');
         divContainerCirculo.classList.add('divContainerCirculo');
 
-        divContainerCirculo.id = 'divContainerCirculo'+etiqueta;
-        
-        h2Porcentaje.id = 'porcentaje'+etiqueta;
+        divContainerCirculoExterno.id = `divContainerCirculoExterno${etiqueta}`;
+        divContainerCirculo.id = `divContainerCirculo${etiqueta}`;
+        h2Porcentaje.id = `porcentaje${etiqueta}`;
 
-        const color1 = document.getElementById('selectCirculo1').value;
-        const color2 = document.getElementById('selectCirculo2').value;
-        const colorFondo = document.getElementById('selectFondo').value;
-
-        const randomColor1 = generarColor();
-        const randomColor2 = generarColor();
-
-        const forma = document.getElementById('selectForma').value;
-
-        if (forma == "1"){
-            //divContainerCirculoExterno.style.background = 'local';
+        // Configuración geométrica según "Forma"
+        if (forma === "1") {
+            // Redondo
             divContainerCirculoExterno.style.borderRadius = '50%';
             divContainerCirculo.style.borderRadius = '50%';
             divContainerCirculo.style.setProperty('--forma', '50%');
-            divContainerCirculoExterno.style.backgroundColor = colorFondo;
-        }
-        if (forma == "2"){
-            divContainerCirculoExterno.style.borderRadius = '';
-            //divContainerCirculoExterno.style.background = 'transparent';
-            divContainerCirculo.style.borderRadius = '';
-            divContainerCirculo.style.setProperty('--forma', '');
-            //divContainerCirculoExterno.style.backgroundColor = colorFondo;
-        }
-        if (forma == "3"){
-            divContainerCirculoExterno.style.borderRadius = '';
-            //divContainerCirculoExterno.style.background = 'transparent';
-            divContainerCirculo.style.borderRadius = '';
+        } else if (forma === "2") {
+            // Cuadrado estilizado (squircle)
+            divContainerCirculoExterno.style.borderRadius = '18px';
+            divContainerCirculo.style.borderRadius = '14px';
+            divContainerCirculo.style.setProperty('--forma', '10px');
+        } else if (forma === "3") {
+            // Híbrido: contenedor cuadrado, medidor circular
+            divContainerCirculoExterno.style.borderRadius = '18px';
+            divContainerCirculo.style.borderRadius = '50%';
             divContainerCirculo.style.setProperty('--forma', '50%');
-            //divContainerCirculoExterno.style.backgroundColor = colorFondo;
         }
-        
 
-        if(colorFondo == 'white' || colorFondo == 'antiquewhite' || colorFondo == 'darksalmon'){
-            h2Etiqueta.style.color = 'black';
-            h2Porcentaje.style.color = 'black';
-        }else{           
-            h2Etiqueta.style.color = 'white';
-            h2Porcentaje.style.color = 'white';            
-        }
+        // Fondo y variables CSS
+        divContainerCirculoExterno.style.backgroundColor = colorFondo;
         divContainerCirculo.style.setProperty('--color', colorFondo);
-        //divContainerCirculoExterno.style.backgroundColor = colorFondo;
-        divContainerCirculoExterno.style.width = '100px';
-        divContainerCirculoExterno.style.height = '100px';
-        //divContainerCirculoExterno.style.borderRadius = '50%';
-        divContainerCirculoExterno.id = 'divContainerCirculoExterno'+etiqueta
-        divContainerCirculoExterno.classList.add('divContainerCirculoExterno')
-        
-        document.getElementById('containerSkillsCirculos').appendChild(divContainerCirculoExterno)
-        document.getElementById(divContainerCirculoExterno.id).appendChild(divContainerCirculo)
-        document.getElementById(divContainerCirculo.id).appendChild(h2Porcentaje)
-        document.getElementById(divContainerCirculo.id).appendChild(h2Etiqueta)
-        /*animacion para el porcentaje de progreso y la barra de color*/
-        
-        let animateProgress = () => {
-            porcentajeInicial += paso ;
 
-            if (porcentajeInicial >= porcentaje) {
-                porcentajeInicial = porcentaje;
+        // Contraste automático para el texto según el fondo
+        const fondosClaros = ['white', '#ffffff', 'antiquewhite', 'darksalmon', 'silver', 'rgb(240, 240, 240)', 'goldenrod'];
+        const colorTexto = fondosClaros.includes(colorFondo.toLowerCase()) ? '#0f172a' : '#ffffff';
+        h2Porcentaje.style.color = colorTexto;
+        h2Etiqueta.style.color = colorTexto;
+
+        // Establecer la etiqueta de texto una sola vez
+        h2Etiqueta.textContent = etiqueta.toUpperCase();
+
+        // Ensamblado en el DOM
+        divContainerCirculo.appendChild(h2Porcentaje);
+        divContainerCirculo.appendChild(h2Etiqueta);
+        divContainerCirculoExterno.appendChild(divContainerCirculo);
+        container.appendChild(divContainerCirculoExterno);
+
+        // Colores del gradiente
+        const c1 = selectColor1 === 'random' ? generarColor() : selectColor1;
+        const c2 = selectColor2 === 'random' ? generarColor() : selectColor2;
+        const porcentaje = Math.floor(Math.random() * 90) + 10;
+        const trackColor = isLight ? 'rgba(0, 0, 0, 0.08)' : 'rgba(255, 255, 255, 0.08)';
+
+        let animFrameId = null;
+
+        function animarCirculo() {
+            if (animFrameId) {
+                cancelAnimationFrame(animFrameId);
             }
 
-            const angulo = (porcentajeInicial / 100) * 360;
+            const duracion = 1200; // ms
+            const inicioTiempo = performance.now();
 
-            //divContainerCirculo.style.background = `conic-gradient(red ${angulo}deg, black ${angulo}deg)`;
-            if (color1 == "random" && color2 == "random"){
-                divContainerCirculo.style.background = `conic-gradient(${randomColor1}, ${randomColor2} ${angulo}deg, ${colorFondo} ${angulo}deg)`;
-            }
-            if (color1 != "random" && color2 == "random"){
-                divContainerCirculo.style.background = `conic-gradient(${color1}, ${randomColor2} ${angulo}deg, ${colorFondo} ${angulo}deg)`;
-            }
-            if (color1 == "random" && color2 != "random"){
-                divContainerCirculo.style.background = `conic-gradient(${randomColor1}, ${color2} ${angulo}deg, ${colorFondo} ${angulo}deg)`;
-            }
-            if (color1 != "random" && color2 != "random"){
-                divContainerCirculo.style.background = `conic-gradient(${color1}, ${color2} ${angulo}deg, ${colorFondo} ${angulo}deg)`;
-            }
-            
-            h2Porcentaje.textContent = `${Math.round(porcentajeInicial)}%`;
-            h2Etiqueta.textContent = `${etiqueta}`;
-            if (porcentajeInicial < porcentaje) {
-                requestAnimationFrame(animateProgress);
-            }
-        };
-        /*hasta aqui es la animacion*/
+            function paso(ahora) {
+                const transcurrido = ahora - inicioTiempo;
+                const progresoFraccion = Math.min(transcurrido / duracion, 1);
+                
+                // Suavizado cubic-bezier easeOut
+                const easeOut = 1 - Math.pow(1 - progresoFraccion, 3);
+                const actual = easeOut * porcentaje;
+                const angulo = (actual / 100) * 360;
 
-        document.getElementById(divContainerCirculo.id).addEventListener('click', () =>{
-            porcentajeInicial = 0;
-            requestAnimationFrame(animateProgress);
+                divContainerCirculo.style.background = `conic-gradient(${c1}, ${c2} ${angulo}deg, ${trackColor} ${angulo}deg 360deg)`;
+                h2Porcentaje.textContent = `${Math.round(actual)}%`;
+
+                if (progresoFraccion < 1) {
+                    animFrameId = requestAnimationFrame(paso);
+                } else {
+                    animFrameId = null;
+                }
+            }
+
+            animFrameId = requestAnimationFrame(paso);
+        }
+
+        // Iniciar animación
+        animarCirculo();
+
+        // Reinicio limpio con clic
+        divContainerCirculoExterno.addEventListener('click', () => {
+            animarCirculo();
         });
-
-        requestAnimationFrame(animateProgress);
     });
 }
 
+// Exponer globalmente para permitir redibujo al cambiar tema
+window.skillCirculo = skillCirculo;
+
 document.getElementById('cambiarCirculo').addEventListener('click', () => {
-    document.getElementById('containerSkillsCirculos').innerHTML = '';
+    const container = document.getElementById('containerSkillsCirculos');
+    container.innerHTML = '';
     skillCirculo(inicio());
-})
+});
 
-function generarColor(){    
-    rojo = Math.floor(Math.random() * 256);//generacion de un numero aleatorio para la formacion de un color
-    verde = Math.floor(Math.random() * 256);
-    azul = Math.floor(Math.random() * 256);
-    return color = `rgb(${rojo},${verde},${azul})`;
-}
-
-
+// Inicialización
 skillCirculo(inicio());

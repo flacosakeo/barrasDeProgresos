@@ -1,107 +1,126 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dashboard interactivo de barras, círculos y semicírculos de progreso con modo claro y oscuro">
     <link rel="stylesheet" href="styleBarra.css">
     <link rel="stylesheet" href="styleCirculo.css">
     <link rel="stylesheet" href="styleSemicirculos.css">
-    <title>Progresos</title>
+    <title>Dashboard de Progresos</title>
 </head>
 <body>
-    <h1>Barra de Progreso</h1>
-    <div style="width: 100%; display: flex; justify-content: end; margin-bottom: 2%;">
-            <button id="cambiarBarra">Cambiar</button>
+    <div class="dashboard-container">
+        <!-- Encabezado Principal -->
+        <header class="main-header">
+            <div class="header-content">
+                <h1>Indicadores de Progreso</h1>
+                <p>Visualización interactiva de habilidades con animaciones fluidas y diseño adaptable</p>
+            </div>
+            <!-- Botón de Modo Oscuro / Claro -->
+            <button id="themeToggle" class="btn-theme-toggle" aria-label="Cambiar entre modo claro y oscuro" title="Cambiar tema">
+                <span class="theme-icon" id="themeIcon">🌙</span>
+                <span class="theme-label" id="themeText">Modo Oscuro</span>
+            </button>
+        </header>
+
+        <!-- Sección: Barras de Progreso -->
+        <section class="section-card" aria-labelledby="title-barras">
+            <div class="section-header">
+                <h2 id="title-barras" class="section-title">
+                    <span>📊</span> Barras de Progreso
+                </h2>
+                <div class="controls-wrapper">
+                    <button id="cambiarBarra" class="btn-primary" aria-label="Regenerar barras de progreso">
+                        <span>🔄</span> Regenerar
+                    </button>
+                </div>
+            </div>
+            <div id="containerSkillsBarras" role="region" aria-label="Lista de barras de progreso"></div>
+        </section>
+
+        <!-- Sección: Círculos de Progreso -->
+        <section class="section-card" aria-labelledby="title-circulos">
+            <div class="section-header">
+                <h2 id="title-circulos" class="section-title">
+                    <span>⭕</span> Círculos de Progreso
+                </h2>
+                <div class="controls-wrapper">
+                    <select id="selectForma" class="select-custom" aria-label="Seleccionar forma geométrica">
+                        <option value="1">Redondo</option>
+                        <option value="2">Cuadrado</option>
+                        <option value="3">Híbrido</option>
+                    </select>
+                    
+                    <select id="selectFondo" class="select-custom" aria-label="Seleccionar color de fondo">
+                        <option value="auto">Automático (Tema)</option>
+                        <option value="black">Negro</option>
+                        <option value="white">Blanco</option>
+                        <option value="antiquewhite">Blanco Antiguo</option>
+                        <option value="rgb(220,130,0)">Naranja</option>
+                        <option value="darkred">Rojo</option>
+                        <option value="darkblue">Azul</option>
+                        <option value="darkviolet">Violeta</option>
+                        <option value="darkcyan">Cian</option>
+                        <option value="darkgrey">Gris</option>
+                        <option value="goldenrod">Oro</option>
+                        <option value="darkgreen">Verde</option>
+                        <option value="darksalmon">Salmón</option>
+                        <option value="indigo">Índigo</option>
+                    </select>
+
+                    <select id="selectCirculo1" class="select-custom" aria-label="Seleccionar color inicial del gradiente">
+                        <option value="random">Color 1: Aleatorio</option>
+                        <option value="#ef4444">Rojo</option>
+                        <option value="#3b82f6">Azul</option>
+                        <option value="#10b981">Verde</option>
+                        <option value="#f59e0b">Amarillo</option>
+                        <option value="#f97316">Naranja</option>
+                        <option value="#8b5cf6">Púrpura</option>
+                        <option value="#ec4899">Rosa</option>
+                        <option value="#06b6d4">Cian</option>
+                        <option value="#84cc16">Lima</option>
+                    </select>
+
+                    <select id="selectCirculo2" class="select-custom" aria-label="Seleccionar color final del gradiente">
+                        <option value="random">Color 2: Aleatorio</option>
+                        <option value="#ec4899">Rosa</option>
+                        <option value="#8b5cf6">Púrpura</option>
+                        <option value="#06b6d4">Cian</option>
+                        <option value="#3b82f6">Azul</option>
+                        <option value="#10b981">Verde</option>
+                        <option value="#f59e0b">Amarillo</option>
+                        <option value="#f97316">Naranja</option>
+                        <option value="#ef4444">Rojo</option>
+                        <option value="#84cc16">Lima</option>
+                    </select>
+
+                    <button id="cambiarCirculo" class="btn-primary" aria-label="Aplicar cambios a círculos de progreso">
+                        <span>🔄</span> Aplicar
+                    </button>
+                </div>
+            </div>
+            <div id="containerSkillsCirculos" role="region" aria-label="Lista de círculos de progreso"></div>
+        </section>
+
+        <!-- Sección: Semicírculos de Progreso -->
+        <section class="section-card" aria-labelledby="title-semicirculos">
+            <div class="section-header">
+                <h2 id="title-semicirculos" class="section-title">
+                    <span>⏱️</span> Semicírculos de Progreso
+                </h2>
+                <div class="controls-wrapper">
+                    <button id="cambiarSemicirculo" class="btn-primary" aria-label="Regenerar semicírculos de progreso">
+                        <span>🔄</span> Regenerar
+                    </button>
+                </div>
+            </div>
+            <div id="containerSkillsSemicirculos" role="region" aria-label="Lista de semicírculos de progreso"></div>
+        </section>
     </div>
 
-    <div id="containerSkillsBarras">
-        
-    </div>
-
-    <h1>Circulo de Progreso</h1>
-    <div style="width: 100%; display: flex; justify-content: end; margin-bottom: 2%; gap: 1%;">
-        <select name="" id="selectForma" style="width: 80px; text-align: center;">
-                <option value="1">Redondo</option>
-                <option value="2">Cuadrado</option>
-                <option value="3">Ambos</option>
-        </select>
-        <select name="" id="selectFondo" style="width: 80px; text-align: center;">
-                <option value="black" style="background-color: black; color: white;">Negro</option>
-                <option value="white" style="background-color: white; color: black;">Blanco</option>
-                <option value="antiquewhite" style="background-color: antiquewhite;">Blanco Antiguo</option>
-                <option value="rgb(220,130,0)" style="background-color: rgb(220,130,0);">Naranja</option>
-                <option value="darkred" style="background-color: darkred;">Rojo</option>
-                <option value="darkblue" style="background-color: darkblue; color: white;">Azul</option>
-                <option value="darkviolet" style="background-color: darkviolet;">Violeta</option>
-                <option value="darkcyan" style="background-color: darkcyan;">Cyan</option>
-                <option value="darkgrey" style="background-color: darkgrey;">Gris</option>
-                <option value="goldenrod" style="background-color: goldenrod;">Oro</option>
-                <option value="darkgreen" style="background-color: darkgreen;">Verde</option>
-                <option value="darksalmon" style="background-color: darksalmon;">Salmon</option>
-                <option value="indigo" style="background-color: indigo; color: white">Indigo</option>
-        </select>  
-        <select name="" id="selectCirculo1" style="width: 80px; text-align: center;">
-                <option value="random">Aleatorio</option>
-                <option value="red" style="background-color: red;">Rojo</option>
-                <option value="brown" style="background-color: brown;">Marrón</option>
-                <option value="chocolate" style="background-color: chocolate;">Chocolate</option>
-                <option value="blue" style="background-color: blue; color: white;">Azul</option>
-                <option value="green" style="background-color: green;">Verde</option>
-                <option value="chartreuse" style="background-color: chartreuse;">Verde Manzana</option>
-                <option value="lime" style="background-color: lime;">Lima</option>
-                <option value="yellow" style="background-color: yellow;">Amarillo</option>
-                <option value="orange" style="background-color: orange;">Naranja</option>
-                <option value="gold" style="background-color: gold;">Oro</option>
-                <option value="purple" style="background-color: purple; color: white;">Purpura</option>
-                <option value="magenta" style="background-color: magenta;">Magenta</option>
-                <option value="violet" style="background-color: violet;">Violeta</option>     
-                <option value="deeppink" style="background-color: deeppink;">Rosa Intenso</option>
-                <option value="pink" style="background-color: pink;">Rosa</option>                 
-                <option value="cyan" style="background-color: cyan;">Cyan</option>               
-                <option value="rgb(50, 50, 50)" style="background-color: rgb(49, 49, 49); color: white;">Negro</option>
-                <option value="grey" style="background-color: grey;">Gris</option>
-                <option value="silver" style="background-color: silver;">Plata</option>
-                <option value="rgb(240, 240, 240)" style="background-color: white;">Blanco</option>             
-        </select> 
-        <select name="" id="selectCirculo2" style="width: 80px; text-align: center;">
-                <option value="random">Aleatorio</option>
-                <option value="red" style="background-color: red;">Rojo</option>
-                <option value="brown" style="background-color: brown;">Marrón</option>
-                <option value="chocolate" style="background-color: chocolate;">Chocolate</option>
-                <option value="blue" style="background-color: blue; color: white;">Azul</option>
-                <option value="green" style="background-color: green;">Verde</option>
-                <option value="chartreuse" style="background-color: chartreuse;">Verde Manzana</option>
-                <option value="lime" style="background-color: lime;">Lima</option>
-                <option value="yellow" style="background-color: yellow;">Amarillo</option>
-                <option value="orange" style="background-color: orange;">Naranja</option>
-                <option value="gold" style="background-color: gold;">Oro</option>
-                <option value="purple" style="background-color: purple; color: white;">Purpura</option>
-                <option value="magenta" style="background-color: magenta;">Magenta</option>
-                <option value="violet" style="background-color: violet;">Violeta</option>     
-                <option value="deeppink" style="background-color: deeppink;">Rosa Intenso</option>
-                <option value="pink" style="background-color: pink;">Rosa</option>                 
-                <option value="cyan" style="background-color: cyan;">Cyan</option>               
-                <option value="rgb(50, 50, 50)" style="background-color: rgb(49, 49, 49); color: white;">Negro</option>
-                <option value="grey" style="background-color: grey;">Gris</option>
-                <option value="silver" style="background-color: silver;">Plata</option>
-                <option value="rgb(240, 240, 240)" style="background-color: white;">Blanco</option>  
-        </select>          
-        <button id="cambiarCirculo">Cambiar</button>
-        
-    </div>
-    <div id="containerSkillsCirculos">
-        
-        
-    </div>
-
-    <h1>Semicirculo de Progreso</h1>
-    <div style="width: 100%; display: flex; justify-content: end; margin-bottom: 2%;">
-            <button id="cambiarSemicirculo">Cambiar</button>
-    </div>
-    <div id="containerSkillsSemicirculos">
-        
-        
-    </div>    
+    <!-- Scripts -->
+    <script src="theme.js"></script>
     <script src="array.js"></script>
     <script src="skillBarra.js"></script>
     <script src="skillCirculo.js"></script>
